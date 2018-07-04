@@ -1,4 +1,4 @@
-source ~/.keys 
+source ~/.keys/keys.sh
 
 # aliases
 alias ls="exa --group-directories-first"

@@ -1,0 +1,2 @@
+# Remove private keys
+profiles/.keys/*.sh
