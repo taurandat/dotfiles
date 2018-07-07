@@ -6,20 +6,19 @@ alias open_stack="ulimit -s unlimited"
 alias clean_test="rm -f *.in *.ok"
 alias now="gdate +%s.%N"
 
-new() {
+cp_new() {
     cp "$PI_DIR/template.cpp" "$1"
 }
 
-cp_run() {
+cp_compile() {
     if (( $# < 1 )); then
         echo "Usage: cp_run source"
     fi
 
-    g++ -O1 -std=gnu++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic "$1" -o "$2"
-    ./${2}.out
+    g++ -O1 -std=gnu++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic "$1" -o "${2}.out"
 }
 
-check() {
+cp_check() {
     if (( $# > 5 )) ; then
         echo "Usage: check src_1 src_2 test_generator #_test_from #_test_to"
         return
@@ -27,26 +26,26 @@ check() {
 
     echo "Compiling default solution."
     cppcheck "$1"
-    cp_run "$1" a
+    cp_compile "$1" a
     echo "Default solution compiled."
 
     if (( $# >= 2 )); then
         echo "Compiling alternative solution."
         cppcheck "$2"
-        cp_run "$2" b
+        cp_compile "$2" b
         echo "Alternative solution compiled."
     fi
 
     if (( $# >= 3 )); then
         echo "Compiling test generator."
         cppcheck "$3"
-        cp_run "$3" c
+        cp_compile "$3" c
         echo "Test generator compiled."
 
         printf "Generating tests: "
         for i in `seq -w $4 $5`; do
             printf "$i "
-            ./c >> $i.in
+            ./c.out >> $i.in
         done
         num_tests=$5-$4+1
         echo "\n$num_tests tests generated."
@@ -56,12 +55,12 @@ check() {
     tested=0; passed=0
     for i in *.in; do
         local start=$(now)
-        ./a < $i >> ${i%in}re
+        ./a.out < $i >> ${i%in}re
         local end=$(now)
-        run_time=$(echo "$end - $start" | bc)
+        run_time=$(echo "${end} - ${start}" | bc)
 
         if (( $# >= 2 )); then
-            ./b < $i >> ${i%in}ok
+            ./b.out < $i >> ${i%in}ok
         fi
 
         diff -u ${i%in}re ${i%in}ok
