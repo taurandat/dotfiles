@@ -63,7 +63,7 @@ values."
             latex-enable-auto-fill t
             latex-enable-folding t)
      (markdown :variables
-               markdown-live-preview-engine 'vmd)
+               markdown-live-preview-engine 'pandoc)
 
      ;; auto-completion
      (auto-completion :variables

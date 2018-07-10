@@ -1,5 +1,5 @@
 if (( $# < 1 )); then
-    echo "Usage: ./update.sh commit_message"
+    echo "Usage: ./import.sh commit_message"
 fi
 
 mkdir -p profiles

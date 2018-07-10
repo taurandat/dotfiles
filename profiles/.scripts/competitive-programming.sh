@@ -1,4 +1,4 @@
-export PI_DIR="$HOME/src/competitive-programming/cp"
+export PI_DIR="$HOME/src/competitive-programming/"
 
 alias pi="cd $PI_DIR && cd"
 
@@ -13,6 +13,7 @@ cp_new() {
 cp_compile() {
     if (( $# < 1 )); then
         echo "Usage: cp_compile source binary_output"
+        return
     fi
 
     g++ -O1 -std=gnu++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic "$1" -o "${2}.out"
@@ -24,25 +25,58 @@ cp_check() {
         return
     fi
 
-    echo "${bold}Compiling default solution${normal} ${1}"
-    cppcheck "$1"
+    echo "${bold}Default solution${normal}: ${yellow}${1}${normal}"
+    printf "> cppcheck: "
+    cppcheck "$1" > /dev/null
+    if [ $? -ne 0 ]; then
+        printf "${red}failed${normal}\n"
+        return
+    fi
+    printf "${green}passed${normal}\n"
+    printf "> g++: "
     cp_compile "$1" a
-    echo "${bold}Default solution${normal} ${1} ${bold}successfully compiled!${normal}"
+    if [ $? -ne 0 ]; then
+        printf "${red}failed${normal}\n"
+        return
+    fi
+    printf "${green}compiled${normal}\n"
     long_separator
 
     if (( $# >= 2 )); then
-        echo "${bold}Compiling alternative solution${normal} ${2}..."
-        cppcheck "$2"
+        echo "${bold}Alternative solution${normal}: ${yellow}${2}${normal}..."
+        printf "> cppcheck: "
+        cppcheck "$2" > /dev/null
+        if [ $? -ne 0 ]; then
+            printf "${red}failed${normal}\n"
+            return
+        fi
+        printf "${green}passed${normal}\n"
+        printf "> g++: "
         cp_compile "$2" b
-        echo "${bold}Alternative solution${normal} ${2} ${bold}successfully compiled!${normal}"
+        if [ $? -ne 0 ]; then
+            printf "${red}failed${normal}\n"
+            return
+        fi
+        printf "${green}compiled${normal}\n"
         long_separator
     fi
 
     if (( $# >= 3 )); then
-        echo "${bold}Compiling test generator${normal} ${3}..."
-        cppcheck "$3"
-        cp_run "$3" c
-        echo "${bold}Test generator${normal} ${3} ${bold}successfully compiled!${normal}"
+        echo "${bold}Test generator${normal}: ${yellow}${3}${normal}"
+        printf "> cppcheck: "
+        cppcheck "$3" > /dev/null
+        if [ $? -ne 0 ]; then
+            printf "${red}failed${normal}\n"
+            return
+        fi
+        printf "${green}passed${normal}\n"
+        printf "> g++: "
+        cp_compile "$3" c
+        if [ $? -ne 0 ]; then
+            printf "${red}failed${normal}\n"
+            return
+        fi
+        printf "${green}compiled${normal}\n"
 
         printf "Generating tests: "
         for i in `seq -w $4 $5`; do
@@ -68,19 +102,26 @@ cp_check() {
 
         diff -u ${i%in}re ${i%in}ok > /dev/null
         if [ $? -ne 0 ]; then
-            echo "${i%.in}: ${bold}${red}FAILED!${nocolor}${normal}"
-            echo "Expected:"; cat ${i%in}ok
-            echo "Got:"; cat ${i%in}re
+            printf "%s: ${red}${bold}FAILED${normal}. Ran in ${red}%.2f${normal} seconds.\n" ${i%.in} ${run_time}
+            printf "> Expected:\t${green}%s${normal}\n" $(cat ${i%in}ok)
+            printf "> Got:\t\t${red}%s${normal}\n" $(cat ${i%in}re)
         else
-            printf "%s: ${bold}PASSED${normal}. Ran in %.2f seconds.\n" ${i%.in} ${run_time}
+            printf "%s: ${green}${bold}PASSED${normal}. Ran in ${green}%.2f${normal} seconds.\n" ${i%.in} ${run_time}
             let passed++
         fi
         let tested++
     done
 
+    long_separator
     echo "Passed ${passed}/${tested} tests."
     long_separator
 
     rm -f *.re
     rm -f a.out b.out c.out
+}
+
+cp_clean() {
+    rm -f *.in
+    rm -f *.ok
+    rm -f *.re
 }

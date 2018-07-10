@@ -4,11 +4,12 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 red='\033[0;31m'
-no_color='\033[0m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+blue='\033[0;34m'
 
 long_separator() {
-    python -c "print('_' * 40)"
-    python -c "print(' ' * 40)"
+    python -c "print('-' * 40)"
 }
 
 all2pdf() {
