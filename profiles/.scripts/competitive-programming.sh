@@ -16,7 +16,7 @@ cp_compile() {
         return
     fi
 
-    g++ -O1 -std=gnu++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic "$1" -o "${2}.out"
+    g++ -O2 -std=gnu++14 -march=native -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic "$1" -o "${2}.out"
 }
 
 cp_check() {

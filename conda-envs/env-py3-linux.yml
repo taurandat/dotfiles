@@ -1,42 +1,41 @@
-name: ai
+name: machine-learning-3
 channels:
     - https://conda.anaconda.org/menpo
     - conda-forge
+    - pytorch
 dependencies:
-    - python==3.5.2
-    - numpy
-    - matplotlib
-    - jupyter
-    - opencv3
-    - pillow
-    - scikit-learn
-    - scikit-image
-    - scipy
-    - h5py
-    - eventlet
-    - flask-socketio
-    - seaborn
-    - pandas
+    - python==3.6.0
     - ffmpeg
-    - imageio=2.1.2
-    - pyqt=4.11.4
-    - librdkafka
+    - opencv3
+    - pytorch
+    - torchvision
+    - numba
     - pip:
         - cython
+        - sortedcollections
+        - eventlet
+        - flask-socketio
         - h5py
-        - confluent-kafka
-        - psycopg2
-        - influxdb
-        - sortedcollections
-        - sortedcollections
+        - pillow
+        - imageio
+        - h5py
+        - scipy
+        - pandas
+        - numpy
+        - jupyter
+        - matplotlib
+        - scikit-learn
+        - scikit-image
+        - seaborn
         - simplejson
         - moviepy
-        - theano
-        - chainer
         - tensorflow-gpu
         - keras
         - pymc3
         - gym[all]
-        - http://download.pytorch.org/whl/cu80/torch-0.1.12.post2-cp35-cp35m-linux_x86_64.whl
-        - torchvision
         - universe
+        - nltk
+        - spacy
+        - xgboost
+        - gensim
+        - SerpentAI
