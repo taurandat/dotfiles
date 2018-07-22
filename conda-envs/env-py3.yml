@@ -1,12 +1,11 @@
 name: machine-learning-3
 channels:
-    - https://conda.anaconda.org/menpo
     - conda-forge
     - pytorch
 dependencies:
     - python==3.6.0
     - ffmpeg
-    - opencv3
+    - opencv
     - pytorch
     - torchvision
     - numba
