@@ -14,5 +14,7 @@ cp $HOME/.spacemacs ./emacs/
 mkdir -p karabiner
 cp -r $HOME/.config/karabiner ./karabiner
 
+gpg --export-secret-key -a $GPG_UID > .gpg/gpg.key
+
 git add -A
 git commit -m "$1"
