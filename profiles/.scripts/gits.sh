@@ -6,9 +6,16 @@ function git-absolute-path() {
 
 function git-commit() {
     if (( $# != 1 )); then
-        echo "git-commit requires a value"
+        echo "git-commit requires a value!"
+        exit 1
     fi
 
-    git commit -m .
-    git commit -m "${$(git-absolute-path)[1,-2]}: ${1}"
+    git_path="${$(git-absolute-path)[1,-2]}"
+    if [ "${git_path}" = "" ]; then
+        git_path="general"
+    fi
+
+    commit_message="${git_path}: ${1}"
+    echo $commit_message
+    git commit -m "${commit_message}"
 }
