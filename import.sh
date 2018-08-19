@@ -5,7 +5,6 @@ fi
 
 mkdir -p profiles
 cp $HOME/.zshrc      profiles
-cp $HOME/.zshenv     profiles
 cp -r $HOME/.scripts profiles
 cp -r $HOME/.keys    profiles
 cp -r $HOME/.ssh     ssh
