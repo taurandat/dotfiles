@@ -5,14 +5,11 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# PATH
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/frameworks/anaconda/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
+source ~/.keys/keys.sh
 
-export GOPATH="$HOME/.go"
-export PATH="$GOPATH/bin:$PATH"
-
+source ~/.scripts/aliases.sh
 source ~/.scripts/competitive-programming.sh
-source ~/.scripts/utils.sh
 source ~/.scripts/crypto.sh
+source ~/.scripts/gits.sh
+source ~/.scripts/utils.sh
+source ~/.scripts/paths.sh

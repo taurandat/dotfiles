@@ -1,4 +1,4 @@
 # Remove private keys
-profiles/.keys/*.sh
+profiles/.keys/
 gpg/*
 ssh/*

@@ -1,3 +1,5 @@
-cp -r ./profiles/         ~/
-cp    ./emacs/.spacemacs/ ~/
-cp -r ./karabiner/        ~/.config/karabiner/
+cp -r profiles/        ~/
+cp    emacs/.spacemacs ~/
+cp -r karabiner/       ~/.config/karabiner/
+cp -r ssh              ~/.ssh
+gpg --import gpg/gpg.key
