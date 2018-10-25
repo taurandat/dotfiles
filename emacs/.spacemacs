@@ -42,9 +42,6 @@ values."
          gofmt-command "goimports"
          go-tab-width 4)
      rust
-     java
-     scala
-     html
 
      ;; data
      org
@@ -72,10 +69,8 @@ values."
 
      ;; should be default
      better-defaults
-     colors
      git
      osx
-     spell-checking
      syntax-checking
      version-control
      (shell :variables
@@ -87,9 +82,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
-   '(
-     all-the-icons
-     )
+   '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -166,11 +159,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Hack"
+   dotspacemacs-default-font '("Fira Code"
                                :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.0)
+                               :powerline-scale 1.2)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -343,9 +336,12 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (global-flycheck-mode)
+
   ;; keybindings
-  (global-set-key (kbd "s-<left>") 'move-beginning-of-line)
-  (global-set-key (kbd "s-<right>") 'move-end-of-line)
+  (global-set-key (kbd "<home>") 'move-beginning-of-line)
+  (global-set-key (kbd "<end>") 'move-end-of-line)
+  (setq-default evil-escape-key-sequence "jk")
 
   ;; pdf-tools
   (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
